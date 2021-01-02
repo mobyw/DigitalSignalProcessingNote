@@ -8,7 +8,7 @@
 \title{数字信号处理笔记}
 \author{Xiaohei}
 \institute{Created by Elegant\LaTeX{}}
-\version{1.2}
+\version{1.3}
 \date{\zhtoday}
 
 \usepackage{tikz}
@@ -189,12 +189,12 @@ $$\delta(n)=u(n)-u(n-1), \quad u(n)=\sum_{k=0}^{\infty}{\delta(n-k)}$$
 \textbf{矩形序列}
 
 \begin{equation}
-        R_N(n)= \left\{
-        \begin{array}{rl}
-        1 & \text{if } 0 \leq n \leq N-1,\\
-        0 & \text{others}.
-        \end{array}
-        \right.
+    R_N(n)= \left\{
+    \begin{array}{rl}
+    1 & \text{if } 0 \leq n \leq N-1,\\
+    0 & \text{others}.
+    \end{array}
+    \right.
 \end{equation}
 
 \begin{center}
@@ -369,7 +369,7 @@ $p(t)\rightarrow\delta_T(t)$，$\delta_T(t)$是以$T$为周期的周期冲激序
 低通滤波器的冲激响应
 
 \begin{equation}
-        h(t)=\text{Sa}(\dfrac{\pi}{T}t)
+        h(t)=\text{Sa}\left(\dfrac{\pi}{T}t\right)
 \end{equation}
 
 低通滤波器的输出
@@ -1149,7 +1149,7 @@ $\widetilde{X}(k)$是$z$变换在单位圆上抽样，抽样点是在单位圆�
 \end{aligned}
 \end{equation}
 
-其中$y_l(n)$的非零区间为$0\leq n\leq N_1+N_2-2$。
+其中$y_l(n)$的非零区间为$0\leq n\leq N_1+N_2-2$。长度为$N_1+N_2-1$。
 
 \textbf{用圆周卷积计算线性卷积}：先将两个序列都补零成$L$点的序列，然后再对它们进行周期延拓，得到圆周卷积为
 
@@ -1157,7 +1157,7 @@ $\widetilde{X}(k)$是$z$变换在单位圆上抽样，抽样点是在单位圆�
     \widetilde{y}(n)=\sum_{m=0}^{L-1}{x_1((m))_L x_2((n-m))_L}=\sum_{r=-\infty}^{\infty}{y_l(n+rL)}
 \end{equation}
 
-其中$y_l(n)$有$N_1+N_2-1$个非零值，所以周期$L$必须满足$L\geq N_1+N_2-1$。由于圆周卷积是周期卷积的主值序列，所以圆周卷积是线性卷积的周期延拓序列的主值序列。
+其中$y_l(n)$有$N_1+N_2-1$个非零值，所以周期$L$必须满足$L\geq N_1+N_2-1$。圆周卷积是线性卷积的周期延拓序列取主值序列。
 
 \subsection{利用DFT对连续时间信号的逼近}
 
@@ -1197,10 +1197,9 @@ $\widetilde{X}(k)$是$z$变换在单位圆上抽样，抽样点是在单位圆�
 
 \begin{quote}
 \begin{enumerate}
-    \item 混叠失真：在采样前加一个防混叠滤波器。
-    \item 频谱泄漏：加长时间窗，或使用加权的时间窗。
-    如汉明窗等。
-    \item 栅栏效应：在$x(n)$后面补零点。
+    \item \textbf{混叠失真}：不满足抽样定理。可在采样前加一个防混叠滤波器。
+    \item \textbf{频谱泄漏}：计算引起的信号的频谱失真，也可能会造成频谱混叠。可加长时间窗，或使用加权的时间窗。如Hamming窗等。
+    \item \textbf{栅栏效应}：频谱间相隔较大时丢失一些中间的信息。可在$x(n)$后面补零点。
 \end{enumerate}
 \end{quote}
 
@@ -1220,7 +1219,7 @@ $$X(k)=\text{DFT}[{x}(n)]=\sum_{n=0}^{N-1}{{x}(n)W_{N}^{nk}}$$
 
 $W_N^{nk}$具有对称性、周期性、可约性，而且在特定位置具有特殊值，利用这些性质可大大减少DFT的计算量，用这种方法计算DFT称为快速傅里叶变换（FFT）。
 
-$N$点的基-2 FFT算法的运算量为：复乘$\dfrac{N}{2}\log_2 N$次；复加$N\log_2 N$次。
+$N=2^L$点的基-2 FFT算法的运算量为：复乘$\dfrac{N}{2}\log_2 N$次；复加$N\log_2 N$次。若$N\neq2^L$，需要先在后面补零点到$2^L$。
 
 FFT分按时间抽取（DIT）和按频率抽取（DIF）两大类。
 
@@ -2150,7 +2149,9 @@ $\varepsilon$表示通带波纹参数，$0<\varepsilon<1$，$\varepsilon$越大�
 
 \subsection{线性相位FIR数字滤波器的特性}
 
-FIR数字滤波器的特性：
+\subsubsection{FIR数字滤波器的特性}
+
+FIR数字滤波器具有如下特性：
 
 \begin{quote}
 \begin{enumerate}
@@ -2160,6 +2161,49 @@ FIR数字滤波器的特性：
     \item 滤波器的阶次较高。
 \end{enumerate}
 \end{quote}
+
+\subsubsection{线性相位充分条件}
+
+\textbf{第一类线性相位}
+
+第一类线性相位条件满足
+
+\begin{equation}
+    \theta(\omega)=-\omega\tau
+\end{equation}
+
+群延时为$\tau$的第一类严格线性相位因果系统的充分条件为
+
+\begin{equation}
+    \left\{
+    \begin{array}{l}
+        h(n)=h(N-1-n), \quad 0\leq n\leq N-1 \\
+        \tau=\dfrac{N-1}{2}
+    \end{array}
+    \right.
+\end{equation}
+
+\textbf{第二类线性相位}
+
+第二类线性相位条件满足
+
+\begin{equation}
+    \theta(\omega)=-\omega\tau+\beta
+\end{equation}
+
+群延时为$\tau$的第二类线性相位因果系统的充分条件为
+
+\begin{equation}
+    \left\{
+    \begin{array}{l}
+        h(n)=h(N-1-n), \quad 0\leq n\leq N-1 \\
+        \beta=\pm\dfrac{\pi}{2} \\
+        \tau=\dfrac{N-1}{2}
+    \end{array}
+    \right.
+\end{equation}
+
+第二类线性相位因果系统除了具有严格的线性相位外，还有$90^{\circ}$的相移，因而又称为线性相位正交变换器。
 
 \subsection{FIR滤波器设计法原理}
 
