@@ -8,7 +8,7 @@
 \title{数字信号处理笔记}
 \author{Xiaohei}
 \institute{Created by Elegant\LaTeX{}}
-\version{1.3}
+\version{1.4}
 \date{\zhtoday}
 
 \usepackage{tikz}
@@ -1202,6 +1202,18 @@ $\widetilde{X}(k)$是$z$变换在单位圆上抽样，抽样点是在单位圆�
     \item \textbf{栅栏效应}：频谱间相隔较大时丢失一些中间的信息。可在$x(n)$后面补零点。
 \end{enumerate}
 \end{quote}
+
+避免混叠失真的参数选择关系：
+
+\begin{quote}
+\begin{enumerate}
+    \item 信号最高频率决定采样频率$f_s\geq 2f_h$。（实际取2.5\textasciitilde 3）
+    \item 最大的抽样时间间隔$T\leq \dfrac{1}{f_s}$。
+    \item 最小记录点数$N\geq\dfrac{f_s}{F_0}$。
+\end{enumerate}
+\end{quote}
+
+从频域抽样恢复原序列的条件：频域抽样点数$N\geq x(n)$的长度$M$。
 
 \section{快速傅里叶变换（FFT）}
 

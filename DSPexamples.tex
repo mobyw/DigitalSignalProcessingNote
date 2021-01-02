@@ -7,6 +7,7 @@
 
 \title{数字信号处理例题讲解}
 \author{Xiaohei}
+\version{1.0}
 \date{\zhtoday}
 
 \usepackage{tikz}
@@ -32,8 +33,11 @@
 
 \maketitle
 
-\setlength{\lineskip}{1em}
+\setlength{\lineskip}{1.5em}
 \setlength{\parskip}{0}
+
+
+本文章为数字信号处理（电气）课程的部分例题讲解，由于部分答案为个人编撰，难免会出现部分错误，请保证使用GitHub仓库所发布的最新版本。如遇问题可在GitHub上发布Issue或直接联系我。
 
 
 \section{离散时间信号与系统}
@@ -54,7 +58,7 @@
 
 \end{exercise}
 
-\begin{solution}[print=false]
+\begin{solution}[print=true]
 
 1) 360Hz。Nyquist抽样频率为信号最高频率的2倍。
 
@@ -87,10 +91,89 @@
 
 \section{$z$变换与离散时间Fourier变换（DTFT）}
 
+\begin{exercise}
 
+已知离散LSI系统的差分方程
+
+\begin{equation}
+\notag
+    y(n)-\frac{3}{4}y(n-1)+\frac{1}{8}y(n-2)=x(n)+\frac{1}{3}x(n-1)
+\end{equation}
+
+其中$x(n)$为输入，$y(n)$为输出。
+
+\begin{quote}
+\begin{itemize}
+    \item[1)] 求系统函数，并指出零极点。
+    \item[2)] 若该系统因果稳定，指出系统收敛域。
+    \item[3)] 求该因果稳定系统的单位抽样响应。 
+\end{itemize}
+\end{quote}
+
+\end{exercise}
+
+\begin{solution}[print=true]
+    
+1) 对差分方程两边取$z$变换：
+
+\begin{equation}
+\notag
+    Y(z)-\frac{3}{4}z^{-1}Y(z)+\frac{1}{8}z^{-2}Y(z)=X(z)+\frac{1}{3}z^{-1}X(z)
+\end{equation}
+
+则系统函数为：
+
+\begin{equation}
+\notag
+    H(z)=\dfrac{Y(z)}{X(z)}=\dfrac{1+\dfrac{1}{3}z^{-1}}{1-\dfrac{3}{4}z^{-1}+\dfrac{1}{8}z^{-2}}=\dfrac{1+\dfrac{1}{3}z^{-1}}{\left(1-\dfrac{1}{2}z^{-1}\right)\left(1-\dfrac{1}{4}z^{-1}\right)}
+\end{equation}
+
+其零点为$z=-\dfrac{1}{3}, 0$，极点为$z=\dfrac{1}{2}, \dfrac{1}{4}$。（不要遗漏$z=0$的零点）
+
+2) 由于系统为因果稳定系统，故其收敛域：
+
+\begin{equation}
+    \notag
+    |z|>\frac{1}{2}
+\end{equation}
+
+3) 用部分分式法求$H(z)$的$z$变换：
+
+\begin{equation}
+    \notag
+    H(z)=\dfrac{1+\dfrac{1}{3}z^{-1}}{\left(1-\dfrac{1}{2}z^{-1}\right)\left(1-\dfrac{1}{4}z^{-1}\right)}=\dfrac{\dfrac{10}{3}}{1-\dfrac{1}{2}z^{-1}}+\dfrac{-\dfrac{7}{3}}{1-\dfrac{1}{4}z^{-1}}
+\end{equation}
+
+根据$|z|>\dfrac{1}{2}$，通过查表法得：
+
+\begin{equation}
+    \notag
+    h(n)=\left[\dfrac{10}{3}\left(\dfrac{1}{2}\right)^n-\dfrac{7}{3}\left(\dfrac{1}{4}\right)^n\right]u(n)
+\end{equation}
+
+\end{solution}
 
 
 \section{离散Fourier变换（DFT）}
+
+\begin{exercise}
+
+设序列$x(n)$的傅氏变换为$X\left(\text{e}^{\text{j}\omega}\right)$，试求下列序列的傅立叶变换。
+
+\begin{quote}
+\begin{itemize}
+    \item[1)] $x(2n)$。
+    \item[2)] $x^*(n)$。
+\end{itemize}
+\end{quote}
+
+\end{exercise}
+
+\begin{solution}
+
+1) 
+
+\end{solution}
 
 \begin{exercise}
 
@@ -106,7 +189,7 @@
 
 \end{exercise}
 
-\begin{solution}[print=false]
+\begin{solution}[print=true]
     
 
 
@@ -134,7 +217,7 @@
 
 \end{exercise}
 
-\begin{solution}[print=false]
+\begin{solution}[print=true]
     
 
 
@@ -161,7 +244,7 @@
 
 \end{exercise}
 
-\begin{solution}[print=false]
+\begin{solution}[print=true]
 
 该IIR系统的系统函数为：
 
@@ -316,7 +399,7 @@
 
 \end{exercise}
 
-\begin{solution}[print=false]
+\begin{solution}[print=true]
 
 截止频率对应的数字频率$\omega_c$为
 
@@ -357,7 +440,7 @@
 
 \end{exercise}
 
-\begin{solution}[print=false]
+\begin{solution}[print=true]
     
 
 
@@ -372,7 +455,7 @@
 
 \end{exercise}
 
-\begin{solution}[print=false]
+\begin{solution}[print=true]
 
 
 
@@ -408,7 +491,7 @@
 
 \end{exercise}
 
-\begin{solution}[print=false]
+\begin{solution}[print=true]
 
 
 
