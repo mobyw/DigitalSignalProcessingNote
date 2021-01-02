@@ -243,3 +243,10 @@ TSWLatexianTemp*
 
 # generated if using elsarticle.cls
 *.spl
+
+# xsim
+*-[1-9]-exercise-body.tex
+*-[1-9]-solution-body.tex
+*-[1-9][0-9]-exercise-body.tex
+*-[1-9][0-9]-solution-body.tex
+*.xsim
