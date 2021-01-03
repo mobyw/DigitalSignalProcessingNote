@@ -2,7 +2,7 @@
 
 \title{数字信号处理各种域与变换的关系}
 \author{Xiaohei}
-\version{1.2}
+\version{1.3}
 \date{\zhtoday}
 
 \usepackage{tikz}
@@ -91,6 +91,11 @@
     \node[left, blue!60, text width=1em] at(10,3) {插值};
     \node[right, red!60, text width=1em] at(10,3) {采样};
 
+    % 3 5
+    \draw[{latex[red!60]}-{latex[blue!60]}] (3) -- (5);
+    \node[above, blue!60] at(3,6) {DTFT};
+    \node[below, red!60] at(3,6) {IDTFT};
+
     % 4 5
     \draw[{latex[red!60]}-{latex[blue!60]}] (4) -- (5);
     \node[left, blue!60] at(7.5,4.8) {插值};
@@ -103,8 +108,8 @@
 
     % 4 6
     \draw[{latex[red!60]}-{latex[blue!60]}] (4) -- (6);
-    \node[left, blue!60, text width=1em] at(5,6) {插值};
-    \node[right, red!60] at(5,6) {$z=W_{n}^{-k}$};
+    \node[left, blue!60, text width=1em] at(5,7) {插值};
+    \node[right, red!60] at(5,7) {$z=W_{n}^{-k}$};
 
     % 5 6
     \draw[{latex[red!60]}-] (5) -- (6);
@@ -135,9 +140,9 @@
     \node[right, red!60] at(2.5,13.2) {ILT};
 
     % 8 9
-    \draw[{latex[red!60]}-{latex[blue!60]}] (8) -- (9);
-    \node[left, blue!60] at(7.5,13.2) {$s=\text{j}\Omega$};
-    \node[right, red!60] at(7.5,13.8) {解析开拓};
+    \draw[{latex[red!60]}-] (8) -- (9);
+    \node[left, blue!60] at(7.5,13.2) {};
+    \node[right, red!60] at(7.5,13.8) {$s=\text{j}\Omega$};
 
 \end{tikzpicture}
 \end{center}
