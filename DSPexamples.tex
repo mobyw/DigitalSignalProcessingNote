@@ -7,7 +7,7 @@
 
 \title{数字信号处理例题讲解}
 \author{Xiaohei}
-\version{1.0}
+\version{1.2}
 \date{\zhtoday}
 
 \usepackage{tikz}
@@ -37,7 +37,7 @@
 \setlength{\parskip}{0}
 
 
-本文章为数字信号处理（电气）课程的部分例题讲解，由于部分答案为个人编撰，难免会出现部分错误，请保证使用GitHub仓库所发布的最新版本。如遇问题可在GitHub上发布Issue或直接联系我。
+本文章为数字信号处理（电气）课程的部分例题讲解，由于部分答案为个人编撰，难免会出现错误，请保证使用\href{https://github.com/Moby-C/DigitalSignalProcessingNote}{GitHub仓库}所发布的最新版本。如遇问题可在GitHub上发布Issue或直接联系我。
 
 
 \section{离散时间信号与系统}
@@ -153,12 +153,9 @@
 
 \end{solution}
 
-
-\section{离散Fourier变换（DFT）}
-
 \begin{exercise}
 
-设序列$x(n)$的傅氏变换为$X\left(\text{e}^{\text{j}\omega}\right)$，试求下列序列的傅立叶变换。
+设序列$x(n)$的傅氏变换为$X\left(\text{e}^{\text{j}\omega}\right)$，试求下列序列的Fourier变换。
 
 \begin{quote}
 \begin{itemize}
@@ -169,11 +166,32 @@
 
 \end{exercise}
 
-\begin{solution}
+\begin{solution}[print=true]
 
 1) 
 
+\begin{equation}
+\notag
+\begin{aligned}
+    \text{DTFT}[x(2n)]&=\sum_{n=-\infty}^{\infty}x(2n)\text{e}^{-\text{j}\omega n}=\sum_{\frac{k}{2}\in\mathbb{Z}}x(k)\text{e}^{-\frac{\text{j}\omega k}{2}} \\
+    &=\frac{1}{2}\sum_{k=-\infty}^{\infty}\left[1+(-1)^k\right]x(k)\text{e}^{-\text{j}\omega\frac{k}{2}} \\
+    &=\frac{1}{2}\sum_{k=-\infty}^{\infty}x(k)\text{e}^{-\text{j}\frac{\omega}{2}k}+\frac{1}{2}\sum_{k=-\infty}^{\infty}x(k)\left(-\text{e}^{-\text{j}\frac{\omega}{2}}\right)^k \\
+    &=\frac{1}{2}X\left(\text{e}^{\text{j}\frac{\omega}{2}}\right)+\frac{1}{2}X\left(-\text{e}^{\text{j}\frac{\omega}{2}}\right)
+\end{aligned}
+\end{equation}
+
+2)
+
+\begin{equation}
+\notag
+    \text{DTFT}[x^*(n)]=\sum_{n=-\infty}^{\infty}x^*(n)\text{e}^{-\text{j}\omega n}=\left[\sum_{n=-\infty}^{\infty}x(n)\text{e}^{\text{j}\omega n}\right]^*=X^*\left(-\text{e}^{\text{j}\omega}\right)
+\end{equation}
+
 \end{solution}
+
+
+\section{离散Fourier变换（DFT）}
+
 
 \begin{exercise}
 
@@ -191,7 +209,26 @@
 
 \begin{solution}[print=true]
     
+1) 最小记录长度
 
+\begin{equation}
+    \notag
+    T_0\geq\frac{1}{F_0}=0.1\text{s}
+\end{equation}
+
+2) 抽样点间的最大时间间隔
+
+\begin{equation}
+    \notag
+    T=\frac{1}{f_s}\leq\frac{1}{2f_h}=0.2\text{ms}
+\end{equation}
+
+3) 在一个记录中的最小抽样点数
+
+\begin{equation}
+    \notag
+    N\geq\frac{T_0}{T}=500 \text{ or } N\geq\frac{f_s}{F_0}=500
+\end{equation}
 
 \end{solution}
 
@@ -219,15 +256,61 @@
 
 \begin{solution}[print=true]
     
+1)
 
+\begin{equation}
+\notag
+\begin{aligned}
+    x_a(t)&=\left[\cos(160\pi t)+\cos(200\pi t)\right]\cos(1200\pi t) \\
+    &=\frac{1}{2}\left[\cos(1000\pi t)+\cos(1040\pi t)+\cos(1360\pi t)+\cos(1400\pi t)\right]
+\end{aligned}
+\end{equation}
+
+最小采样频率为
+
+\begin{equation}
+\notag
+    f_s=2f_h=2\times 700\text{Hz}=1400\text{Hz}
+\end{equation}
+
+2)
+
+\begin{equation}
+\notag
+\begin{aligned}
+    x(n)&=\frac{1}{2}\left[\cos\left(\frac{1000\pi n}{1400}\right)+\cos\left(\frac{1040\pi n}{1400}\right)+\cos\left(\frac{1360\pi n}{1400}\right)+\cos\left(\frac{1400\pi n}{1400}\right)\right] \\
+    &=\frac{1}{2}\left[\cos\left(\frac{5}{7}\pi n\right)+\cos\left(\frac{26}{35}\pi n\right)+\cos\left(\frac{34}{35}\pi n\right)+\cos\left(\pi n\right)\right] \\
+    &=2\cos\left(\frac{6}{7}\pi n\right)\cos\left(\frac{9}{70}\pi n\right)\cos\left(\frac{1}{70}\pi n\right)
+\end{aligned}
+\end{equation}
+
+3) 最大谱分辨率
+
+\begin{equation}
+\notag
+    F_0=520\text{Hz}-500\text{Hz}=20\text{Hz}
+\end{equation}
+
+最小采样点数
+
+\begin{equation}
+\notag
+    N=\frac{f_s}{F_0}=\frac{1400}{20}=70
+\end{equation}
+
+4) 由抽样定理知，小于600Hz信号可被恢复
+
+\begin{equation}
+\notag
+    x'_a(t)=\frac{1}{2}\left[\cos(1000\pi t)+\cos(1040\pi t)\right]
+\end{equation}
 
 \end{solution}
 
 
 \section{快速Fourier变换（FFT）}
 
-
-
+要求会画运算流图和计算复加复乘次数，题目略。
 
 \section{数字滤波器的基本结构}
 
@@ -422,7 +505,7 @@
     H_a(s)=\dfrac{1}{1+2\left(\dfrac{s}{c}\right)+2\left(\dfrac{s}{c}\right)^2+\left(\dfrac{s}{c}\right)^3}
 \end{equation}
 
-映射到$z$平面为
+采用双线性变换法，映射到$z$平面为
 
 \begin{equation}
 \notag
@@ -442,7 +525,29 @@
 
 \begin{solution}[print=true]
     
+1) 脉冲响应不变法
 
+\begin{equation}
+\notag
+    H_a(s)=\frac{1}{2s^2+3s+1}=\frac{1}{(2s+1)(s+1)}=\frac{1}{s-\left(-\frac{1}{2}\right)}+\frac{-1}{s-(-1)}
+\end{equation}
+
+\begin{equation}
+\notag
+    H(z)=\frac{T}{1-\text{e}^{-\frac{1}{2}T}z^{-1}}+\frac{-T}{1-\text{e}^{-T}z^{-1}}=\frac{2}{1-\text{e}^{-1}z^{-1}}-\frac{2}{1-\text{e}^{-2}z^{-1}}
+\end{equation}
+
+2) 双线性变换法
+
+取$c=\frac{2}{T}=1$，则
+
+\begin{equation}
+\notag
+\begin{aligned}
+    H(z)=\left.H_a(s)\right|_{s=c\frac{1-z^{-1}}{1+z^{-1}}}&=\dfrac{1}{2\left(\frac{1-z^{-1}}{1+z^{-1}}\right)^2+3\left(\frac{1-z^{-1}}{1+z^{-1}}\right)+1} \\
+    &=\frac{1}{6}\cdot\frac{1+2z^{-1}+z^{-2}}{1-\frac{1}{3}z^{-1}}
+\end{aligned}
+\end{equation}
 
 \end{solution}
 
@@ -457,7 +562,53 @@
 
 \begin{solution}[print=true]
 
+理想低通滤波器特性为
 
+\begin{equation}
+\notag
+    H_d\left(\text{e}^{\text{j}\omega}\right)=\left\{
+    \begin{array}{ll}
+        \text{e}^{-\text{j}\omega\tau}, & |\omega|\leq\omega_c \\
+        0, & |\omega|>\omega_c
+    \end{array}
+    \right.
+\end{equation}
+
+群延时
+
+\begin{equation}
+\notag
+    \tau=\frac{N-1}{2}=8
+\end{equation}
+
+过渡带宽
+
+\begin{equation}
+\notag
+    \Delta\omega=0.9\cdot\frac{2\pi}{N}\approx 0.1\pi
+\end{equation}
+
+理想低通截止频率
+
+\begin{equation}
+\notag
+    \omega_c\approx\frac{1}{2}(\omega_p+\omega_{st})=0.55\pi
+\end{equation}
+
+\begin{equation}
+\notag
+    h_d(n)=\frac{1}{2\pi}\int_{-\pi}^{\pi}H_d\left(\text{e}^{\text{j}\omega}\right)\text{e}^{\text{j}\omega n}\text{d}\omega=\frac{\sin[\omega_c(n-\tau)]}{\pi(n-\tau)}=\frac{\sin[0.55\pi(n-8)]}{\pi(n-8)}
+\end{equation}
+
+\begin{equation}
+\notag
+    h(n)=\left\{
+    \begin{array}{ll}
+        \dfrac{\sin[0.55\pi(n-8)]}{\pi(n-8)}, & 0\leq n\leq 16 \\
+        0, & \text{Others}
+    \end{array}
+    \right.
+\end{equation}
 
 \end{solution}
 
@@ -484,7 +635,7 @@
 \begin{quote}
 \begin{itemize}
     \item[1)] 若图中数字信号处理器\textcircled{1}是IIR数字滤波器并具有高通特性，试确定其截止频率和输出信号（忽略滤波器带来的影响）。
-    \item[2)] 简要叙说IIR和FIR这两种滤波器的异同（至少涉及3个方面）。
+    \item[2)] 简要叙说IIR和FIR滤波器的异同（至少涉及3方面）。
     \item[3)] 设A/D采样率为512Hz，对序列$x(n)$进行256个点的FFT变换。求两谱线间的频率间隔。若对上述数据进行离散傅立叶反变换，则反变换后的抽样间隔是多少？整个256个点的时宽又为多少？
 \end{itemize}
 \end{quote}
@@ -493,7 +644,37 @@
 
 \begin{solution}[print=true]
 
+1) 截止频率为$[100, 150]$Hz，输出信号为高频部分
 
+\begin{equation}
+\notag
+    x(t)=\sin(300\pi t)
+\end{equation}
+
+2) \textbf{IIR滤波器}：单位冲激响应无限长；系统函数在有限$z$平面上有极点存在，系统可能不稳定；结构上是递归型的，即存在着输出到输入的反馈。
+
+\textbf{FIR滤波器}：单位冲激响应是有限个非零值；系统函数只有零点，全部极点都在$z=0$处，系统总是因果稳定的；结构上主要是非递归结构，没有输出到输入的反馈。
+
+3) 频率间隔
+
+\begin{equation}
+\notag
+    F_0=\frac{512\text{Hz}}{256}=2\text{Hz}
+\end{equation}
+
+抽样间隔
+
+\begin{equation}
+\notag
+    T_0=\frac{1}{f_s}=\frac{1}{512}\text{s}
+\end{equation}
+
+256点时宽
+
+\begin{equation}
+\notag
+    T_{256}=256\cdot T_0=0.5\text{s}
+\end{equation}
 
 \end{solution}
 
